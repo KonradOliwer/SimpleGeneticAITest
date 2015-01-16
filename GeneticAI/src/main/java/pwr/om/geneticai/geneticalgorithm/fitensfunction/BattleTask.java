@@ -52,12 +52,12 @@ public abstract class BattleTask implements Callable<int[]> {
         int[] result = new int[size];
         for (int i = 0; i < repeats; i++) {
             for (int j = 0; j < result.length; j++) {
-                calculateResult(j, i);
+                result[j] += calculateResult(j, i);
             }
         }
         return result;
     }
-    
+
     public abstract int calculateResult(int selfIndex, int round);
 
     public int getSize() {

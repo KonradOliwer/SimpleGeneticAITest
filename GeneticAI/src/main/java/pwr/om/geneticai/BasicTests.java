@@ -54,7 +54,7 @@ public class BasicTests {
 
     public Actor generateActorWithAI(BattleTasksFactory battleTaskFactory, ChromosomeFactory chromosomeFactory, EnemyFactory enemyFactory,
             int testActorsIndex) {
-        FitnesFuntion fitnesFunction;
+        BattleFitnesFuntion fitnesFunction;
         Mutation mutation;
         double mutationChancePerGene;
         Actor testActor;
@@ -75,6 +75,7 @@ public class BasicTests {
                 .population(chromosomeFactory.generatePopulation(testActor, populationSize))
                 .build();
         algorith.run();
+        fitnesFunction.clean();
 
         try {
             Actor result = testActor.clone();
@@ -96,11 +97,10 @@ public class BasicTests {
     public double selfRandomAITest(Battleground battleground, Actor self, int repeat) {
         try {
             double wins = 0;
-            AI ai = new EnchantedRandomAI();
             Actor enemy = self.clone();
-            self.setAI(ai);
+            enemy.setAI(new EnchantedRandomAI());
             for (int i = 0; i < repeat; i++) {
-                wins = self == battleground.determineWinner(self, enemy) ? 1 : 0;
+                wins += self == battleground.determineWinner(self, enemy, true) ? 1 : 0;
             }
             return wins / repeat;
         } catch (CloneNotSupportedException ex) {
@@ -110,7 +110,7 @@ public class BasicTests {
     }
 
     public double randomAIFullTest(Battleground battleground, Actor self) {
-        return randomAIFullTest(battleground, self, 100);
+        return randomAIFullTest(battleground, self, 10);
     }
 
     public double randomAIFullTest(Battleground battleground, Actor self, int repeat) {
@@ -120,7 +120,7 @@ public class BasicTests {
         for (Actor enemy : actors) {
             enemy.setAI(ai);
             for (int i = 0; i < repeat; i++) {
-                wins = self == battleground.determineWinner(self, enemy) ? 1 : 0;
+                wins += self == battleground.determineWinner(self, enemy) ? 1 : 0;
             }
         }
         return wins / (repeat * actors.length);

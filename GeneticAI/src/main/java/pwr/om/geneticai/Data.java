@@ -48,12 +48,12 @@ public class Data {
     private static Hero[] heroes;
 
     private static void generateTestData() {
-        heroes = new Hero[200 * 9];
+        heroes = new Hero[MAX_LVL * Store.getInsctance().getBloodLines().length * Store.getInsctance().getProfessions().length];
         int index = 0;
         for (BloodLine bloodLine : Store.getInsctance().getBloodLines()) {
             for (Profession profession : Store.getInsctance().getProfessions()) {
                 for (int lvl = 0; lvl < MAX_LVL; lvl++) {
-                    heroes[lvl] = new Hero(index, bloodLine, profession, lvl);
+                    heroes[index++] = new Hero(index, bloodLine, profession, lvl);
                 }
             }
         }

@@ -15,17 +15,65 @@
  */
 package pwr.om.geneticai.chromosome;
 
+import java.util.Random;
 import pwr.om.battlesystem.actor.Actor;
+import static pwr.om.battlesystem.actor.Actor.MAX_AP_VALUE;
+import static pwr.om.battlesystem.actor.Actor.MAX_HP_VALUE;
 
 /**
  *
  * @author KonradOliwer
  */
-public class BasicInfoChromosomeFactory implements ChromosomeFactory {
+public class BasicInfoChromosomeFactory implements ChromosomeFactory{
 
     @Override
-    public Chromosome newInstance(Actor self) {
+    public Chromosome createChromosome(Actor self) {
         return new BasicInfoChromosome(self);
     }
 
+    @Override
+    public boolean isValid(int[] chromosome, int gene) {
+        return true;
+    }
+
+    @Override
+    public boolean isValid(int[] chromosome) {
+        return true;
+    }
+
+    @Override
+    public int[][] generatePopulation(Actor actor, int size) {
+        Random random = new Random();
+        int actionsNumber = actor.getActions().size();
+        int[][] population = new int[size][];
+        int ap = actor.getStatistics().getAp();
+        int hp = actor.getStatistics().getHp();
+        for (int i = 0; i < population.length; i++) {
+            population[i] = new int[BasicInfoChromosome.INDEXES_PER_ACION * actionsNumber];
+            for (int j = 0; j < actionsNumber; j++) {
+                int base = BasicInfoChromosome.INDEXES_PER_ACION * j;
+                population[i][base + BasicInfoChromosome.BASE_ACTION_PRIORITY_INDEX] = random.nextInt(100);
+
+                population[i][base + BasicInfoChromosome.ENEMY_AP_LOWER_BORDER_INDEX] = random.nextInt(MAX_AP_VALUE);
+                population[i][base + BasicInfoChromosome.ENEMY_AP_UPPER_BORDER_INDEX]
+                        = randomUpperBoarder(population[i], random, base + BasicInfoChromosome.ENEMY_AP_LOWER_BORDER_INDEX, MAX_AP_VALUE);
+                population[i][base + BasicInfoChromosome.ENEMY_HP_LOWER_BORDER_INDEX] = random.nextInt(MAX_HP_VALUE);
+                population[i][base + BasicInfoChromosome.ENEMY_HP_UPPER_BORDER_INDEX]
+                        = randomUpperBoarder(population[i], random, base + BasicInfoChromosome.ENEMY_HP_LOWER_BORDER_INDEX, MAX_HP_VALUE);
+
+                population[i][base + BasicInfoChromosome.SELF_AP_LOWER_BORDER_INDEX] = random.nextInt(ap);
+                population[i][base + BasicInfoChromosome.SELF_AP_UPPER_BORDER_INDEX]
+                        = randomUpperBoarder(population[i], random, base + BasicInfoChromosome.SELF_AP_LOWER_BORDER_INDEX, ap);
+                population[i][base + BasicInfoChromosome.SELF_HP_LOWER_BORDER_INDEX] = random.nextInt(hp);
+                population[i][base + BasicInfoChromosome.SELF_HP_UPPER_BORDER_INDEX]
+                        = randomUpperBoarder(population[i], random, base + BasicInfoChromosome.SELF_HP_LOWER_BORDER_INDEX, hp);
+            }
+            population[i][BasicInfoChromosome.INDEXES_PER_ACION * 9 + BasicInfoChromosome.BASE_ACTION_PRIORITY_INDEX] = 0;
+        }
+        return population;
+    }
+
+    private static int randomUpperBoarder(int[] chromosome, Random random, int lowe, int max) {
+        return 1 + random.nextInt(max - chromosome[lowe]) + chromosome[lowe];
+    }
 }

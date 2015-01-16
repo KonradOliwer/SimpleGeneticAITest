@@ -16,11 +16,14 @@
 package pwr.om.geneticai.chromosome;
 
 import pwr.om.battlesystem.actor.Actor;
+import pwr.om.geneticalgorithm.integer.ChromosomeValidatior;
 
 /**
  *
  * @author KonradOliwer
  */
-public interface ChromosomeFactory {
-    public Chromosome newInstance(Actor self);
+public interface ChromosomeFactory extends ChromosomeValidatior {
+
+    public Chromosome createChromosome(Actor self);
+    public int[][] generatePopulation(Actor actor, int size);
 }

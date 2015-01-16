@@ -22,35 +22,33 @@ import java.util.logging.Logger;
 import pwr.om.battlesystem.Battleground;
 import pwr.om.battlesystem.actor.Actor;
 import pwr.om.geneticai.GeneticAI;
-import pwr.om.geneticai.chromosome.Chromosome;
+import pwr.om.geneticai.chromosome.ChromosomeFactory;
 
 /**
  *
  * @author KonradOliwer
  */
 public abstract class BattleTasksFactory {
-    
-    private final EnemyFactory enemiesFactory;
-    private final Actor testedActor;
-    private final Chromosome testedActorChromosome;
-    private Actor[][] testedActors;
+
+    private Actor testedActor;
+    private final ChromosomeFactory chromosomeFactory;
     protected final Battleground battleground;
     protected final int repeats;
-    
-    public BattleTasksFactory(EnemyFactory enemiesFactory, Battleground battleground, int repeats, Actor testedActor,
-            Chromosome testedActorChromosome) {
-        this.enemiesFactory = enemiesFactory;
-        this.testedActor = testedActor;
-        this.testedActorChromosome = testedActorChromosome;
+    private final EnemyFactory enemiesFactory;
+    private Actor[][] testedActors;
+
+    public BattleTasksFactory(Battleground battleground, int repeats, EnemyFactory enemiesFactory, ChromosomeFactory chromosomeFactory) {
+        this.chromosomeFactory = chromosomeFactory;
         this.battleground = battleground;
         this.repeats = repeats;
+        this.enemiesFactory = enemiesFactory;
     }
-    
+
     protected abstract Callable getBattleTask(Actor[] actorsTested, Actor[] enemis, int populationStartIndex, int size);
-    
+
     public FutureTask[] produceTasks(int[][] population, int[] distribution) {
         lasyInitTestedActors(distribution);
-        Actor[][] enemies = enemiesFactory.getEnemies(population, distribution);
+        Actor[][] enemies = enemiesFactory.getEnemies(population, distribution, testedActor);
         FutureTask<int[]>[] result = new FutureTask[distribution.length];
         int startIndex = 0;
         for (int i = 0; i < distribution.length; i++) {
@@ -62,7 +60,7 @@ public abstract class BattleTasksFactory {
         }
         return result;
     }
-    
+
     private void lasyInitTestedActors(int[] distribution) {
         if (testedActors == null) {
             testedActors = new Actor[distribution.length][];
@@ -71,12 +69,36 @@ public abstract class BattleTasksFactory {
                 for (int j = 0; j < distribution[i]; j++) {
                     try {
                         testedActors[i][j] = testedActor.clone();
-                        testedActors[i][j].setAI(new GeneticAI(testedActorChromosome.clone()));
+                        testedActors[i][j].setAI(new GeneticAI(chromosomeFactory.createChromosome(testedActors[i][j])));
                     } catch (CloneNotSupportedException ex) {
                         Logger.getLogger(BattleTasksFactory.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         }
+    }
+
+    public void setTestedActor(Actor testedActor) {
+        this.testedActor = testedActor;
+    }
+
+    public Actor getTestedActor() {
+        return testedActor;
+    }
+
+    public ChromosomeFactory getChromosomeFactory() {
+        return chromosomeFactory;
+    }
+
+    public Battleground getBattleground() {
+        return battleground;
+    }
+
+    public int getRepeats() {
+        return repeats;
+    }
+
+    public EnemyFactory getEnemiesFactory() {
+        return enemiesFactory;
     }
 }

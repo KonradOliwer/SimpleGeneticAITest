@@ -22,5 +22,5 @@ import pwr.om.battlesystem.actor.Actor;
  * @author KonradOliwer
  */
 public interface EnemyFactory {
-    public Actor[][] getEnemies(int[][] population, int[] distribution);
+    public Actor[][] getEnemies(int[][] population, int[] distribution, Actor testedActor);
 }

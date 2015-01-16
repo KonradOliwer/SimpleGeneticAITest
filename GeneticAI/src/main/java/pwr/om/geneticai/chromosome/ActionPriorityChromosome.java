@@ -43,5 +43,4 @@ public class ActionPriorityChromosome extends Chromosome {
         }
         return chromosome[actionIndex];
     }
-
 }

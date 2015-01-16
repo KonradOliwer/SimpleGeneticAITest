@@ -19,7 +19,7 @@ package pwr.om.geneticai.geneticalgorithm.fitensfunction.variable;
 import java.util.concurrent.Callable;
 import pwr.om.battlesystem.Battleground;
 import pwr.om.battlesystem.actor.Actor;
-import pwr.om.geneticai.chromosome.Chromosome;
+import pwr.om.geneticai.chromosome.ChromosomeFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.BattleTask;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.BattleTasksFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.EnemyFactory;
@@ -41,9 +41,8 @@ public class RandomEnemyBattleTask extends BattleTask {
 
     public static class Factory extends BattleTasksFactory {
 
-        public Factory(EnemyFactory enemiesFactory, Battleground battleground, int repeats, Actor testedActor, 
-                Chromosome testedActorChromosome) {
-            super(enemiesFactory, battleground, repeats, testedActor, testedActorChromosome);
+        public Factory(Battleground battleground, int repeats, EnemyFactory enemyFactory, ChromosomeFactory chromosomeFactory) {
+            super(battleground, repeats, enemyFactory, chromosomeFactory);
         }
 
         @Override

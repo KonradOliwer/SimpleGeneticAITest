@@ -35,7 +35,8 @@ public abstract class Chromosome implements Cloneable, Serializable {
         chromosome = new int[actionIds.length * indexPerAction];
     }
 
-     private Chromosome() {}
+    private Chromosome() {
+    }
 
     public void copyArrayReprezentation(int[] arrayReprezentation) {
         System.arraycopy(arrayReprezentation, 0, chromosome, 0, arrayReprezentation.length);

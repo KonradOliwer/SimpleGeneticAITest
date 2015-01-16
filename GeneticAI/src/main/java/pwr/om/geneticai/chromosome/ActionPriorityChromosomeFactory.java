@@ -15,6 +15,7 @@
  */
 package pwr.om.geneticai.chromosome;
 
+import java.util.Random;
 import pwr.om.battlesystem.actor.Actor;
 
 /**
@@ -24,8 +25,30 @@ import pwr.om.battlesystem.actor.Actor;
 public class ActionPriorityChromosomeFactory implements ChromosomeFactory {
 
     @Override
-    public Chromosome newInstance(Actor self) {
+    public Chromosome createChromosome(Actor self) {
         return new ActionPriorityChromosome(self);
     }
 
+    @Override
+    public boolean isValid(int[] chromosome, int gene) {
+        return true;
+    }
+
+    @Override
+    public boolean isValid(int[] chromosome) {
+        return true;
+    }
+
+    public int[][] generatePopulation(Actor actor, int size) {
+        Random random = new Random();
+        int[][] population = new int[size][];
+        for (int i = 0; i < population.length; i++) {
+            population[i] = new int[actor.getActions().size()];
+            population[i][0] = 1; //wait action
+            for (int j = 1; j < actor.getActions().size(); j++) {
+                population[i][j] = random.nextInt(100);
+            }
+        }
+        return population;
+    }
 }

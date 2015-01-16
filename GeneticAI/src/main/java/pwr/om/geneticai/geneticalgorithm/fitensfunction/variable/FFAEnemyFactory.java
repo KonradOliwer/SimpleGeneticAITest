@@ -18,6 +18,7 @@ package pwr.om.geneticai.geneticalgorithm.fitensfunction.variable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pwr.om.battlesystem.actor.Actor;
+import pwr.om.battlesystem.ai.AI;
 import pwr.om.geneticai.GeneticAI;
 import pwr.om.geneticai.chromosome.ChromosomeFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.EnemyFactory;
@@ -37,24 +38,21 @@ public class FFAEnemyFactory implements EnemyFactory {
     }
 
     @Override
-    public Actor[][] getEnemies(int[][] population, int[] distribution) {
-        initLasyEnemies(population, distribution);
+    public Actor[][] getEnemies(int[][] population, int[] distribution, Actor testedActor) {
+        lasyInitEnemies(population, distribution);
         int populationIndex = 0;
-        for (Actor[] enemie : enemies) {
-            for (Actor enemy : enemie) {
-                ((GeneticAI) enemy.getAi()).getChromosome().copyArrayReprezentation(population[populationIndex++]);
+        for (int i = 0; i < enemies.length; i++) {
+            for (int j = 0; j < enemies[i].length; j++) {
+                ((GeneticAI) enemies[i][j].getAi()).getChromosome().copyArrayReprezentation(population[populationIndex++]);
             }
         }
         return enemies;
     }
 
-    private void initLasyEnemies(int[][] population, int[] distribution) {
+    private void lasyInitEnemies(int[][] population, int[] distribution) {
         if (enemies == null) {
             enemies = new Actor[distribution.length][];
             enemies[0] = RandomActorsFactory.generateActors(distribution[0]);
-            for (int i = 0; i < enemies[0].length; i++) {
-                enemies[0][i].setAI(new GeneticAI(chromosomeFactory.newInstance(enemies[0][i])));
-            }
             for (int i = 1; i < enemies.length; i++) {
                 enemies[i] = new Actor[distribution[i]];
                 for (int j = 0; j < distribution[i]; j++) {
@@ -63,6 +61,11 @@ public class FFAEnemyFactory implements EnemyFactory {
                     } catch (CloneNotSupportedException ex) {
                         Logger.getLogger(FFAEnemyFactory.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+            }
+            for (int i = 0; i < enemies.length; i++) {
+                for (int j = 0; j < enemies[i].length; j++) {
+                    enemies[i][j].setAI(new GeneticAI(chromosomeFactory.createChromosome(enemies[i][j])));
                 }
             }
         }

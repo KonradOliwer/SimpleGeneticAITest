@@ -1,5 +1,9 @@
+package pwr.om.geneticai;
+
+import java.io.File;
+
 /*
- * Copyright 2014 KonradOliwer.
+ * Copyright 2015 KonradOliwer.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +17,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pwr.om.geneticai.chromosome;
-
-import pwr.om.geneticalgorithm.integer.ChromosomeValidatior;
-
 /**
  *
  * @author KonradOliwer
  */
-public class BasicInfoChromosomeValidatior implements ChromosomeValidatior {
+public class Utils {
 
-    @Override
-    public boolean isValid(int[] chromosome, int gene) {
-        return true;
+    public static String generateFilePath(String directory, String fileName) {
+        return directory + File.separator + fileName;
     }
 
-    @Override
-    public boolean isValid(int[] chromosome) {
-        return true;
-    }
 }

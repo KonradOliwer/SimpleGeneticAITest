@@ -15,6 +15,7 @@
  */
 package pwr.om.battlesystem.actor;
 
+import java.io.Serializable;
 import pwr.om.battlesystem.actor.actions.FireAction;
 import pwr.om.battlesystem.actor.actions.FireballAction;
 import pwr.om.battlesystem.actor.actions.HealAction;
@@ -30,7 +31,7 @@ import pwr.om.battlesystem.actor.actions.StrengtheningArmorAction;
  *
  * @author KonradOliwer
  */
-public final class Hero extends Actor {
+public final class Hero extends Actor implements Serializable{
 
     private Profession profession;
     private BloodLine bloodLine;
@@ -68,5 +69,15 @@ public final class Hero extends Actor {
             profession.lvlUp(this);
             bloodLine.lvlUp(this);
         }
+        actions.add(new FireAction());
+        actions.add(new FireballAction());
+        actions.add(new HealAction());
+        actions.add(new HitAction());
+        actions.add(new MoveAction());
+        actions.add(new ReflectAction());
+        actions.add(new RegenerationAction());
+        actions.add(new ShootAction());
+        actions.add(new SlashAction());
+        actions.add(new StrengtheningArmorAction());
     }
 }

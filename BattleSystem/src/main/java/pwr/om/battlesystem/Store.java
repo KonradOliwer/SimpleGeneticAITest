@@ -30,6 +30,14 @@ public class Store {
         return professions[id];
     }
 
+    public BloodLine[] getBloodLines() {
+        return bloodLines;
+    }
+
+    public Profession[] getProfessions() {
+        return professions;
+    }
+
     public static Store getInsctance() {
         return instance;
     }

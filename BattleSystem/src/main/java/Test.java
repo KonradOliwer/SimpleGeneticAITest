@@ -2,7 +2,6 @@ import pwr.om.battlesystem.Battleground;
 import pwr.om.battlesystem.Store;
 import pwr.om.battlesystem.actor.Actor;
 import pwr.om.battlesystem.actor.Hero;
-import pwr.om.battlesystem.actor.Profession;
 import pwr.om.battlesystem.ai.RandomAI;
 
 

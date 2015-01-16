@@ -15,13 +15,15 @@
  */
 package pwr.om.battlesystem.actor;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  *
  * @author KonradOliwer
  */
-public class BloodLine {
+public class BloodLine implements Serializable {
+
     public final int id;
     int apIncrease;
     int hpIncrease;
@@ -51,12 +53,17 @@ public class BloodLine {
         Random random = new Random();
         actor.getStatistics().ap = actor.statisticIncrease(random, actor.getStatistics().ap, hpIncrease, Actor.MAX_AP_VALUE);
         actor.getStatistics().hp = actor.statisticIncrease(random, actor.getStatistics().hp, hpIncrease, Actor.MAX_HP_VALUE);
-        actor.getStatistics().movmentSpeed = actor.statisticIncrease(random, actor.getStatistics().movmentSpeed, movmentSpeedIncrease, 
+        actor.getStatistics().movmentSpeed = actor.statisticIncrease(random, actor.getStatistics().movmentSpeed, movmentSpeedIncrease,
                 Actor.MAX_MOVMENT_SPEED_VALUE);
-        actor.getStatistics().agility = actor.statisticIncrease(random, actor.getStatistics().agility, agilitiIncrease, 
+        actor.getStatistics().agility = actor.statisticIncrease(random, actor.getStatistics().agility, agilitiIncrease,
                 Actor.MAX_ATTRIBUTE_VALUE);
-        actor.getStatistics().inteligence = actor.statisticIncrease(random, actor.getStatistics().inteligence, inteligenceIncrease, 
+        actor.getStatistics().inteligence = actor.statisticIncrease(random, actor.getStatistics().inteligence, inteligenceIncrease,
                 Actor.MAX_ATTRIBUTE_VALUE);
-        actor.getStatistics().strength = actor.statisticIncrease(random, actor.getStatistics().strength, strengthIncrease, Actor.MAX_ATTRIBUTE_VALUE);
+        actor.getStatistics().strength = actor.statisticIncrease(random, actor.getStatistics().strength, strengthIncrease, 
+                Actor.MAX_ATTRIBUTE_VALUE);
+    }
+
+    public int getId() {
+        return id;
     }
 }

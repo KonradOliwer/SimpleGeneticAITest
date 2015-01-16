@@ -15,6 +15,7 @@
  */
 package pwr.om.battlesystem.actor;
 
+import java.io.Serializable;
 import java.util.Random;
 import pwr.om.battlesystem.actor.actions.FireAction;
 import pwr.om.battlesystem.actor.actions.FireballAction;
@@ -31,7 +32,7 @@ import pwr.om.battlesystem.actor.actions.StrengtheningArmorAction;
  *
  * @author KonradOliwer
  */
-public class Profession {
+public class Profession implements Serializable {
 
     public final int id;
     public int fireballUnlock;
@@ -85,41 +86,45 @@ public class Profession {
         actor.getStatistics().movmentSpeed = actor.statisticIncrease(random, actor.getStatistics().movmentSpeed, movmentSpeedIncrease,
                 Actor.MAX_MOVMENT_SPEED_VALUE);
 
-        boolean[] ownedAbilities = actor.ownedAbilities();
-
-        if (!ownedAbilities[FireAction.ACTION_CD] && unlock(random, fireUnlock)) {
-            actor.actions.add(new FireAction());
-        }
-        if (!ownedAbilities[FireballAction.ACTION_CD] && unlock(random, fireballUnlock)) {
-            actor.actions.add(new FireballAction());
-        }
-        if (!ownedAbilities[HealAction.ACTION_CD] && unlock(random, healUnlock)) {
-            actor.actions.add(new HealAction());
-        }
-        if (!ownedAbilities[HitAction.ACTION_CD] && unlock(random, hitUnlock)) {
-            actor.actions.add(new HitAction());
-        }
-        if (!ownedAbilities[MoveAction.ACTION_CD] && unlock(random, moveUnlock)) {
-            actor.actions.add(new MoveAction());
-        }
-        if (!ownedAbilities[ReflectAction.ACTION_CD] && unlock(random, reflectUnlock)) {
-            actor.actions.add(new ReflectAction());
-        }
-        if (!ownedAbilities[RegenerationAction.ACTION_CD] && unlock(random, regenerationUnlock)) {
-            actor.actions.add(new RegenerationAction());
-        }
-        if (!ownedAbilities[ShootAction.ACTION_CD] && unlock(random, shootUnlock)) {
-            actor.actions.add(new ShootAction());
-        }
-        if (!ownedAbilities[SlashAction.ACTION_CD] && unlock(random, slashUnlock)) {
-            actor.actions.add(new SlashAction());
-        }
-        if (!ownedAbilities[StrengtheningArmorAction.ACTION_CD] && unlock(random, strengtheningArmorUnlock)) {
-            actor.actions.add(new StrengtheningArmorAction());
-        }
+//        boolean[] ownedAbilities = actor.ownedAbilities();
+//
+//        if (!ownedAbilities[FireAction.ACTION_CD] && unlock(random, fireUnlock)) {
+//            actor.actions.add(new FireAction());
+//        }
+//        if (!ownedAbilities[FireballAction.ACTION_CD] && unlock(random, fireballUnlock)) {
+//            actor.actions.add(new FireballAction());
+//        }
+//        if (!ownedAbilities[HealAction.ACTION_CD] && unlock(random, healUnlock)) {
+//            actor.actions.add(new HealAction());
+//        }
+//        if (!ownedAbilities[HitAction.ACTION_CD] && unlock(random, hitUnlock)) {
+//            actor.actions.add(new HitAction());
+//        }
+//        if (!ownedAbilities[MoveAction.ACTION_CD] && unlock(random, moveUnlock)) {
+//            actor.actions.add(new MoveAction());
+//        }
+//        if (!ownedAbilities[ReflectAction.ACTION_CD] && unlock(random, reflectUnlock)) {
+//            actor.actions.add(new ReflectAction());
+//        }
+//        if (!ownedAbilities[RegenerationAction.ACTION_CD] && unlock(random, regenerationUnlock)) {
+//            actor.actions.add(new RegenerationAction());
+//        }
+//        if (!ownedAbilities[ShootAction.ACTION_CD] && unlock(random, shootUnlock)) {
+//            actor.actions.add(new ShootAction());
+//        }
+//        if (!ownedAbilities[SlashAction.ACTION_CD] && unlock(random, slashUnlock)) {
+//            actor.actions.add(new SlashAction());
+//        }
+//        if (!ownedAbilities[StrengtheningArmorAction.ACTION_CD] && unlock(random, strengtheningArmorUnlock)) {
+//            actor.actions.add(new StrengtheningArmorAction());
+//        }
     }
 
     private boolean unlock(Random random, int chance) {
         return random.nextInt(101) <= chance;
+    }
+
+    public int getId() {
+        return id;
     }
 }

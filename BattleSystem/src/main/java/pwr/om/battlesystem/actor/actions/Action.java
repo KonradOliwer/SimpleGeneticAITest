@@ -15,13 +15,14 @@
  */
 package pwr.om.battlesystem.actor.actions;
 
+import java.io.Serializable;
 import pwr.om.battlesystem.actor.Actor;
 
 /**
  *
  * @author KonradOliwer
  */
-public abstract class Action {
+public abstract class Action implements Serializable {
 
     protected static int maxId = -1;
     protected final int id;

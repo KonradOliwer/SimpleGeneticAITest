@@ -56,6 +56,16 @@ public class FixedPopulationSizeGeneticAlgorithm {
         return population;
     }
 
+    private int getBestFitnessValue() {
+        int bestValue = -1;
+        for (int i = 0; i < populationFitnesFunctionValuse.length; i++) {
+            if (bestValue < populationFitnesFunctionValuse[i]) {
+                bestValue = populationFitnesFunctionValuse[i];
+            }
+        }
+        return bestValue;
+    }
+
     public int[] getBest() {
         int bestIndex = -1;
         int bestValue = -1;

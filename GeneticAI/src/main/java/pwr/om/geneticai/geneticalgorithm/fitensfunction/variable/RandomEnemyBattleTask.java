@@ -36,7 +36,8 @@ public class RandomEnemyBattleTask extends BattleTask {
 
     @Override
     public int calculateResult(int selfIndex, int round) {
-        return actorsTested[selfIndex] == battleground.determineWinner(actorsTested[selfIndex], selectEnemy(selfIndex, round)) ? 1 : -1;
+        Actor winer = battleground.determineWinner(actorsTested[selfIndex], selectEnemy(selfIndex, round));
+        return winer == null ? 1 : (actorsTested[selfIndex] == winer ? 10 : 0);
     }
 
     public static class Factory extends BattleTasksFactory {

@@ -27,9 +27,11 @@ import pwr.om.battlesystem.Battleground;
 import pwr.om.battlesystem.actor.Actor;
 import pwr.om.geneticai.chromosome.ActionPriorityChromosomeFactory;
 import pwr.om.geneticai.chromosome.ChromosomeFactory;
+import pwr.om.geneticai.geneticalgorithm.crossover.BaseGenesCrossover;
+import pwr.om.geneticai.geneticalgorithm.crossover.RandomGenesCrossover;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.BattleTasksFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.EnemyFactory;
-import pwr.om.geneticai.geneticalgorithm.fitensfunction.variable.FFAEnemyFactory;
+import pwr.om.geneticai.geneticalgorithm.fitensfunction.variable.RandomAIEnemyFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.variable.RandomEnemyBattleTask;
 
 /**
@@ -39,8 +41,8 @@ import pwr.om.geneticai.geneticalgorithm.fitensfunction.variable.RandomEnemyBatt
 public class TestPerformer {
 
     private static final String SAVE_DIR = "test_resylts.txt";
-    private final static int ITERATIONS = 50;
-    private final static int POPULATION_SIZE = 500;
+    private final static int ITERATIONS = 2000;
+    private final static int POPULATION_SIZE = 1000;
     private final static int MAX_ROUNDS = 50;
     private final static int START_DISTANCE = 1000;
     private final static List<Actor> computedActors = new ArrayList();
@@ -54,12 +56,17 @@ public class TestPerformer {
         BattleTasksFactory battleTaskFactory = null;
         ChromosomeFactory chromosmeFactory = null;
         EnemyFactory enemyFactory = null;
+        BaseGenesCrossover crossover = null;
+        double mutatuonChance;
 
+        mutatuonChance = 0.05;
+        crossover = new RandomGenesCrossover();
         chromosmeFactory = new ActionPriorityChromosomeFactory();
-        enemyFactory = new FFAEnemyFactory(chromosmeFactory);
-        battleTaskFactory = new RandomEnemyBattleTask.Factory(battleground, 100, enemyFactory, chromosmeFactory);
-        createActor(battleTaskFactory, chromosmeFactory, enemyFactory);
-        
+//        enemyFactory = new FFAEnemyFactory(chromosmeFactory);
+        enemyFactory = new RandomAIEnemyFactory(chromosmeFactory);
+        battleTaskFactory = new RandomEnemyBattleTask.Factory(battleground, 10, enemyFactory, chromosmeFactory);
+        createActor(battleTaskFactory, chromosmeFactory, enemyFactory, crossover, mutatuonChance);
+
         testActors();
 
         saveActors();
@@ -83,8 +90,9 @@ public class TestPerformer {
         }
     }
 
-    public static void createActor(BattleTasksFactory battleTaskFactory, ChromosomeFactory chromosomeFactory, EnemyFactory enemyFactory) {
-        Actor result = test.generateActorWithAI(battleTaskFactory, chromosomeFactory, enemyFactory);
+    public static void createActor(BattleTasksFactory battleTaskFactory, ChromosomeFactory chromosomeFactory, EnemyFactory enemyFactory,
+            BaseGenesCrossover crossover, double mutationChance) {
+        Actor result = test.generateActorWithAI(battleTaskFactory, chromosomeFactory, enemyFactory, crossover, mutationChance);
         computedActors.add(result);
         computedActorsNames.add(String.format("bt-%d-%d_%s_%s_%s", ITERATIONS, POPULATION_SIZE,
                 battleTaskFactory.getClass().getSimpleName(),

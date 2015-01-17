@@ -22,7 +22,7 @@ import pwr.om.battlesystem.actor.Actor;
  *
  * @author KonradOliwer
  */
-public class ActionPriorityChromosomeFactory implements ChromosomeFactory {
+public class ActionPriorityChromosomeFactory extends ChromosomeFactory {
 
     @Override
     public Chromosome createChromosome(Actor self) {
@@ -31,7 +31,7 @@ public class ActionPriorityChromosomeFactory implements ChromosomeFactory {
 
     @Override
     public boolean isValid(int[] chromosome, int gene) {
-        return true;
+        return chromosome[gene] >= 0;
     }
 
     @Override
@@ -39,6 +39,7 @@ public class ActionPriorityChromosomeFactory implements ChromosomeFactory {
         return true;
     }
 
+    @Override
     public int[][] generatePopulation(Actor actor, int size) {
         Random random = new Random();
         int[][] population = new int[size][];

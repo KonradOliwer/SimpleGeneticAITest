@@ -10,12 +10,12 @@ import pwr.om.geneticai.chromosome.Chromosome;
 import pwr.om.geneticai.chromosome.ChromosomeFactory;
 import pwr.om.geneticai.geneticalgorithm.IterationBasedStopFunction;
 import pwr.om.geneticai.geneticalgorithm.RouletteWheelSelectionFunction;
+import pwr.om.geneticai.geneticalgorithm.crossover.BaseGenesCrossover;
 import pwr.om.geneticai.geneticalgorithm.crossover.RandomGenesCrossover;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.BattleFitnesFuntion;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.BattleTasksFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.EnemyFactory;
 import pwr.om.geneticai.geneticalgorithm.mutation.DoubleVMutation;
-import pwr.om.geneticalgorithm.integer.FitnesFuntion;
 import pwr.om.geneticalgorithm.integer.FixedPopulationSizeGeneticAlgorithm;
 import pwr.om.geneticalgorithm.integer.Mutation;
 
@@ -48,26 +48,25 @@ public class BasicTests {
         this.populationSize = populationSize;
     }
 
-    public Actor generateActorWithAI(BattleTasksFactory battleTaskFactory, ChromosomeFactory chromosomeFactory, EnemyFactory enemyFactory) {
-        return generateActorWithAI(battleTaskFactory, chromosomeFactory, enemyFactory, 50);
+    public Actor generateActorWithAI(BattleTasksFactory battleTaskFactory, ChromosomeFactory chromosomeFactory, EnemyFactory enemyFactory,
+            BaseGenesCrossover crossover, double mutationChancePerGene) {
+        return generateActorWithAI(battleTaskFactory, chromosomeFactory, enemyFactory, crossover, 50, mutationChancePerGene);
     }
 
     public Actor generateActorWithAI(BattleTasksFactory battleTaskFactory, ChromosomeFactory chromosomeFactory, EnemyFactory enemyFactory,
-            int testActorsIndex) {
+            BaseGenesCrossover crossover, int testActorsIndex, double mutationChancePerGene) {
         BattleFitnesFuntion fitnesFunction;
         Mutation mutation;
-        double mutationChancePerGene;
         Actor testActor;
         Actor[] testActors = Data.getSavedActor();
 
-        mutationChancePerGene = 0.01;
         mutation = new DoubleVMutation(mutationChancePerGene);
         testActor = testActors[testActorsIndex];
 
         battleTaskFactory.setTestedActor(testActor);
         fitnesFunction = new BattleFitnesFuntion(battleTaskFactory);
         FixedPopulationSizeGeneticAlgorithm algorith = FixedPopulationSizeGeneticAlgorithm.Builder.init()
-                .crossoverMethod(new RandomGenesCrossover())
+                .crossoverMethod(crossover)
                 .fitnesFuntion(fitnesFunction)
                 .mutation(mutation)
                 .selectionFunction(new RouletteWheelSelectionFunction())

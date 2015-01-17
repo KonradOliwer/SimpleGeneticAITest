@@ -22,8 +22,19 @@ import pwr.om.geneticalgorithm.integer.ChromosomeValidatior;
  *
  * @author KonradOliwer
  */
-public interface ChromosomeFactory extends ChromosomeValidatior {
+public abstract class ChromosomeFactory implements ChromosomeValidatior {
 
-    public Chromosome createChromosome(Actor self);
-    public int[][] generatePopulation(Actor actor, int size);
+    public abstract Chromosome createChromosome(Actor self);
+
+    public abstract int[][] generatePopulation(Actor actor, int size);
+
+    @Override
+    public boolean isValid(int[] chromosome) {
+        for (int i = 0; i < chromosome.length; i++) {
+            if (!isValid(chromosome, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

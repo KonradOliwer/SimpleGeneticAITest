@@ -24,7 +24,7 @@ import static pwr.om.battlesystem.actor.Actor.MAX_HP_VALUE;
  *
  * @author KonradOliwer
  */
-public class BasicInfoChromosomeFactory implements ChromosomeFactory{
+public class BasicInfoChromosomeFactory extends ChromosomeFactory {
 
     @Override
     public Chromosome createChromosome(Actor self) {
@@ -33,12 +33,7 @@ public class BasicInfoChromosomeFactory implements ChromosomeFactory{
 
     @Override
     public boolean isValid(int[] chromosome, int gene) {
-        return true;
-    }
-
-    @Override
-    public boolean isValid(int[] chromosome) {
-        return true;
+        return chromosome[gene] >= 0;
     }
 
     @Override

@@ -62,7 +62,7 @@ public class DoubleVMutation implements Mutation {
     }
 
     private boolean mutate(ChromosomeValidatior chromosomeValidatior, int[] chromosome, int gene) {
-        chromosome[gene] += random.nextInt(1 + chromosome[gene]);
+        chromosome[gene] += (random.nextBoolean() ? 1 : -1) * random.nextInt(1 + chromosome[gene]);
         return chromosomeValidatior.isValid(chromosome, gene);
     }
 }

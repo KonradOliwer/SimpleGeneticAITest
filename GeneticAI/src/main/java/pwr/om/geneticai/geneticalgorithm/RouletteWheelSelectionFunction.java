@@ -53,20 +53,16 @@ public class RouletteWheelSelectionFunction implements SelectionFunction {
     }
 
     private void fillResultIndexes(int[] resultIndexes) {
-        try {
-            int bound = partsArray[partsArray.length - 1].value + 1;
-            for (int i = 0; i < resultIndexes.length; i++) {
-                int value = random.nextInt(bound);
-                for (IndexedValue entity : partsArray) {
-                    // takes adventage that partsArray is sorted by values
-                    if (value < entity.value) {
-                        resultIndexes[i] = entity.index;
-                        break;
-                    }
+        int bound = partsArray[partsArray.length - 1].value + 1;
+        for (int i = 0; i < resultIndexes.length; i++) {
+            int value = random.nextInt(bound);
+            for (IndexedValue entity : partsArray) {
+                // takes adventage that partsArray is sorted by values
+                if (value < entity.value) {
+                    resultIndexes[i] = entity.index;
+                    break;
                 }
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 }

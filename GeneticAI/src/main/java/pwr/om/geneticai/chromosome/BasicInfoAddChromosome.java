@@ -22,7 +22,7 @@ import pwr.om.battlesystem.actor.State;
  *
  * @author KonradOliwer
  */
-public class BasicInfoChromosome extends Chromosome {
+public class BasicInfoAddChromosome extends Chromosome {
 
     final static int INDEXES_PER_ACION = 9;
     final static int BASE_ACTION_PRIORITY_INDEX = 0;
@@ -35,11 +35,11 @@ public class BasicInfoChromosome extends Chromosome {
     final static int ENEMY_AP_LOWER_BORDER_INDEX = 7;
     final static int ENEMY_AP_UPPER_BORDER_INDEX = 8;
 
-    public BasicInfoChromosome(Actor self) {
+    public BasicInfoAddChromosome(Actor self) {
         super(self, INDEXES_PER_ACION);
     }
 
-    public BasicInfoChromosome(Actor self, int[] arrayReprezentation) {
+    public BasicInfoAddChromosome(Actor self, int[] arrayReprezentation) {
         this(self);
         this.copyArrayReprezentation(arrayReprezentation);
     }
@@ -57,14 +57,14 @@ public class BasicInfoChromosome extends Chromosome {
         State e = enemy.getState();
         int startIndexOfAction = actionIndex * INDEXES_PER_ACION;
         return (int) (chromosome[startIndexOfAction + BASE_ACTION_PRIORITY_INDEX]
-                * between(SELF_HP_LOWER_BORDER_INDEX, SELF_HP_UPPER_BORDER_INDEX, startIndexOfAction, s.hp)
-                * between(SELF_AP_LOWER_BORDER_INDEX, SELF_AP_UPPER_BORDER_INDEX, startIndexOfAction, s.ap)
-                * between(ENEMY_HP_LOWER_BORDER_INDEX, ENEMY_HP_UPPER_BORDER_INDEX, startIndexOfAction, e.hp)
-                * between(ENEMY_AP_LOWER_BORDER_INDEX, ENEMY_AP_UPPER_BORDER_INDEX, startIndexOfAction, e.ap)
+                + between(SELF_HP_LOWER_BORDER_INDEX, SELF_HP_UPPER_BORDER_INDEX, startIndexOfAction, s.hp)
+                + between(SELF_AP_LOWER_BORDER_INDEX, SELF_AP_UPPER_BORDER_INDEX, startIndexOfAction, s.ap)
+                + between(ENEMY_HP_LOWER_BORDER_INDEX, ENEMY_HP_UPPER_BORDER_INDEX, startIndexOfAction, e.hp)
+                + between(ENEMY_AP_LOWER_BORDER_INDEX, ENEMY_AP_UPPER_BORDER_INDEX, startIndexOfAction, e.ap)
                 );
     }
 
     private double between(int lowerIndex, int upperIndex, int offset, int value) {
-        return (chromosome[offset + lowerIndex] <= value && chromosome[offset + upperIndex] >= value) ? 1 : 0.5;
+        return (chromosome[offset + lowerIndex] <= value && chromosome[offset + upperIndex] >= value) ? 1 : 0;
     }
 }

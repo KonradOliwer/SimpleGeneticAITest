@@ -29,9 +29,11 @@ import pwr.om.geneticai.geneticalgorithm.fitensfunction.RandomActorsFactory;
  */
 public class RandomAIEnemyFactory implements EnemyFactory {
 
+    private final ChromosomeFactory chromosomeFactory;
     private Actor[][] enemies;
 
     public RandomAIEnemyFactory(ChromosomeFactory chromosomeFactory) {
+        this.chromosomeFactory = chromosomeFactory;
     }
 
     @Override
@@ -61,5 +63,10 @@ public class RandomAIEnemyFactory implements EnemyFactory {
                 }
             }
         }
+    }
+
+    @Override
+    public ChromosomeFactory getChromosomeFactory() {
+        return chromosomeFactory;
     }
 }

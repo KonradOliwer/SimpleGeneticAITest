@@ -124,4 +124,16 @@ public class BasicTests {
         }
         return wins / (repeat * actors.length);
     }
+
+    public double geneticAIFight(Battleground battleground, Actor self, Actor enemy) {
+        return geneticAIFight(battleground, self, enemy, 100);
+    }
+
+    public double geneticAIFight(Battleground battleground, Actor self, Actor enemy, int repeat) {
+        double wins = 0;
+        for (int i = 0; i < repeat; i++) {
+            wins += self == battleground.determineWinner(self, enemy, true) ? 1 : 0;
+        }
+        return wins / repeat;
+    }
 }

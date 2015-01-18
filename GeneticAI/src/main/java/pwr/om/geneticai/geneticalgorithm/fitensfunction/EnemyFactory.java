@@ -16,6 +16,7 @@
 package pwr.om.geneticai.geneticalgorithm.fitensfunction;
 
 import pwr.om.battlesystem.actor.Actor;
+import pwr.om.geneticai.chromosome.ChromosomeFactory;
 
 /**
  *
@@ -23,4 +24,5 @@ import pwr.om.battlesystem.actor.Actor;
  */
 public interface EnemyFactory {
     public Actor[][] getEnemies(int[][] population, int[] distribution, Actor testedActor);
+    public ChromosomeFactory getChromosomeFactory();
 }

@@ -18,7 +18,6 @@ package pwr.om.geneticai.geneticalgorithm.fitensfunction.variable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pwr.om.battlesystem.actor.Actor;
-import pwr.om.battlesystem.ai.AI;
 import pwr.om.geneticai.GeneticAI;
 import pwr.om.geneticai.chromosome.ChromosomeFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.EnemyFactory;
@@ -69,5 +68,10 @@ public class FFAEnemyFactory implements EnemyFactory {
                 }
             }
         }
+    }
+
+    @Override
+    public ChromosomeFactory getChromosomeFactory() {
+        return chromosomeFactory;
     }
 }

@@ -38,7 +38,7 @@ public class HpCheckBattleTask extends BattleTask {
     public int calculateResult(int selfIndex, int round) {
         battleground.determineWinner(actorsTested[selfIndex], selectEnemy(selfIndex, round));
         Actor self = actorsTested[selfIndex];
-        return (int) (100 * ((double) self.getState().hp) / self.getStatistics().getHp());
+        return (int) (100 * ((double) (self.getState().hp < 0 ? 0 : self.getState().hp)) / self.getStatistics().getHp());
     }
 
     public static class Factory extends BattleTasksFactory {

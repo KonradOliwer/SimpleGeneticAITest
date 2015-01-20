@@ -132,7 +132,8 @@ public class BasicTests {
     public double geneticAIFight(Battleground battleground, Actor self, Actor enemy, int repeat) {
         double wins = 0;
         for (int i = 0; i < repeat; i++) {
-            wins += self == battleground.determineWinner(self, enemy, true) ? 1 : 0;
+            Actor winer = battleground.determineWinner(self, enemy, true);
+            wins += winer == null ? 0.5 : (self == winer ? 1 : 0);
         }
         return wins / repeat;
     }

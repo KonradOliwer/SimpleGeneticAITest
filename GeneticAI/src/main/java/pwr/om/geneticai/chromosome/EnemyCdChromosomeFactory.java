@@ -45,7 +45,11 @@ public class EnemyCdChromosomeFactory extends ChromosomeFactory {
 
     @Override
     public boolean isValid(int[] chromosome, int gene) {
-        return chromosome[gene] >= 0;
+        int base = gene % EnemyCdChromosome.INDEXES_PER_ACION;
+        return chromosome[gene] >= 0 && (base != 0  && base % 2 == 0 && chromosome[gene] >= chromosome[gene - 1])
+                //max values
+                && ((base > 4 || base == 0 && chromosome[gene] <= 10)
+                || (base <= 4 && base != 0 && chromosome[gene] <= 100));
     }
 
     @Override
@@ -68,65 +72,65 @@ public class EnemyCdChromosomeFactory extends ChromosomeFactory {
                 population[i][base + li] = random.nextInt(max);
                 population[i][base + EnemyCdChromosome.ENEMY_HP_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, FireballAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_FIREBALL_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_FIREBALL_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_FIREBALL_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
                 max = getActionCd(actor, FireAction.ACTION_CD);
-                
+
                 li = EnemyCdChromosome.ENEMY_FIRE_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_FIRE_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_FIRE_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, HealAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_HEAL_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_HEAL_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_HEAL_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, HitAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_HIT_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_HIT_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_HIT_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, MoveAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_MOVE_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_MOVE_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_MOVE_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, ReflectAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_REFLECT_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_REFLECT_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_REFLECT_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, RegenerationAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_REGENERATION_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_REGENERATION_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_REGENERATION_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, ShootAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_SHOOT_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_SHOOT_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_SHOOT_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, SlashAction.ACTION_CD);
                 li = EnemyCdChromosome.SELF_HP_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_SLASH_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_SLASH_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
-                
+
                 max = getActionCd(actor, StrengtheningArmorAction.ACTION_CD);
                 li = EnemyCdChromosome.ENEMY_STRENGTHENING_ARMOR_LOWER_BORDER_INDEX;
                 population[i][base + li] = random.nextInt(max);
-                population[i][base + EnemyCdChromosome.ENEMY_STRENGTHENING_ARMOR_UPPER_BORDER_INDEX] 
+                population[i][base + EnemyCdChromosome.ENEMY_STRENGTHENING_ARMOR_UPPER_BORDER_INDEX]
                         = randomUpperBoarder(population[i], random, base + li, max);
             }
             population[i][EnemyCdChromosome.INDEXES_PER_ACION * 9 + EnemyCdChromosome.BASE_ACTION_PRIORITY_INDEX] = 0;

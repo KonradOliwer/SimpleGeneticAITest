@@ -33,7 +33,8 @@ public class BasicInfoChromosomeFactory extends ChromosomeFactory {
 
     @Override
     public boolean isValid(int[] chromosome, int gene) {
-        return chromosome[gene] >= 0;
+        int base = gene % BasicInfoChromosome.INDEXES_PER_ACION;
+        return chromosome[gene] >= 0 && (base != 0 && base % 2 == 0 && chromosome[gene] >= chromosome[gene - 1]) && chromosome[gene] <= 100;
     }
 
     @Override

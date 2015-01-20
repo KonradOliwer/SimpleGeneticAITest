@@ -70,15 +70,9 @@ public class Actor implements Cloneable, Serializable {
 
     public int takeAction(Actor enemy) {
         if (!isWaiting()) {
-            try{
-                Action action = selectAction(enemy);
+            Action action = selectAction(enemy);
             return action.performe(this, enemy);
-            }catch(Exception ex){
-                Action action = selectAction(enemy);
-                ex.printStackTrace();
-                return WaitAction.ACTION_ID;
-            }
-        }else{
+        } else {
             return WaitAction.ACTION_ID;
         }
     }

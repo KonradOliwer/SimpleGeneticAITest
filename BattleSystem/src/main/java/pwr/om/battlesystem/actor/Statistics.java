@@ -53,4 +53,25 @@ public class Statistics implements Cloneable, Serializable {
     public int getAp() {
         return ap;
     }
+
+    //For test purpose---------------------------------------------------------
+    public void setAgility(int agility) {
+        this.agility = agility;
+    }
+    public void setInteligence(int inteligence) {
+        this.inteligence = inteligence;
+    }
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+    public void setMovmentSpeed(int movmentSpeed) {
+        this.movmentSpeed = movmentSpeed;
+    }
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+    public void setAp(int ap) {
+        this.ap = ap;
+    }
+    //---------------------------------------------------------For test purpose
 }

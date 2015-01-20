@@ -28,8 +28,6 @@ import java.util.logging.Logger;
 import pwr.om.battlesystem.Battleground;
 import pwr.om.battlesystem.actor.Actor;
 import pwr.om.battlesystem.ai.EnchantedRandomAI;
-import pwr.om.geneticai.chromosome.ActionPriorityChromosomeFactory;
-import pwr.om.geneticai.chromosome.BasicInfoAddChromosomeFactory;
 import pwr.om.geneticai.chromosome.BasicInfoChromosomeFactory;
 import pwr.om.geneticai.chromosome.ChromosomeFactory;
 import pwr.om.geneticai.chromosome.EnemyCdChromosomeFactory;
@@ -38,6 +36,7 @@ import pwr.om.geneticai.geneticalgorithm.crossover.PartialGenesCrossover;
 import pwr.om.geneticai.geneticalgorithm.crossover.RandomGenesCrossover;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.BattleTasksFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.EnemyFactory;
+import pwr.om.geneticai.geneticalgorithm.fitensfunction.variable.HpCheckBattleTask;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.variable.RandomAIEnemyFactory;
 import pwr.om.geneticai.geneticalgorithm.fitensfunction.variable.RandomEnemyBattleTask;
 
@@ -49,9 +48,9 @@ public class TestPerformer {
 
     private static final Logger LOG = Logger.getLogger(TestPerformer.class.getName());
     private static final String SAVE_DIR = "test_resylts.txt";
-    private final static int REPEAT = 1;
-    private final static int ITERATIONS = 1500;
-    private final static int POPULATION_SIZE = 1000;
+    private final static int REPEAT = 4;
+    private final static int ITERATIONS = 1000;
+    private final static int POPULATION_SIZE = 500;
     private final static int MAX_ROUNDS = 50;
     private final static int START_DISTANCE = 1000;
     private final static StringBuilder acc = new StringBuilder();
@@ -211,7 +210,7 @@ public class TestPerformer {
         List<EnemyFactory> enemyFactories = getEnemyFactories(getChromosomeFactories());
 
         for (EnemyFactory enemyFactory : enemyFactories) {
-//            result.add(new HpCheckBattleTask.Factory(battleground, 5, enemyFactory, enemyFactory.getChromosomeFactory()));
+            result.add(new HpCheckBattleTask.Factory(battleground, 5, enemyFactory, enemyFactory.getChromosomeFactory()));
             result.add(new RandomEnemyBattleTask.Factory(battleground, 5, enemyFactory, enemyFactory.getChromosomeFactory()));
         }
         return result;
@@ -228,10 +227,10 @@ public class TestPerformer {
 
     private static List<ChromosomeFactory> getChromosomeFactories() {
         List<ChromosomeFactory> chromosmeFactories = new ArrayList();
-        chromosmeFactories.add(new ActionPriorityChromosomeFactory());
-        chromosmeFactories.add(new BasicInfoAddChromosomeFactory());
+//        chromosmeFactories.add(new ActionPriorityChromosomeFactory());
+//        chromosmeFactories.add(new BasicInfoAddChromosomeFactory());
         chromosmeFactories.add(new BasicInfoChromosomeFactory());
-        chromosmeFactories.add(new EnemyCdChromosomeFactory());
+//        chromosmeFactories.add(new EnemyCdChromosomeFactory());
         return chromosmeFactories;
     }
 
